@@ -1,9 +1,55 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/ListDataItem.dart';
+import 'package:flutter_app/connectivity_provider.dart';
+import 'package:flutter_app/no_internet.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   @override
-  _HomePageState createState() => _HomePageState();
+  _HomePage createState() => _HomePage();
+}
+
+class _HomePage extends State<HomePage> {
+  @override
+  void initState() {
+    super.initState();
+    Provider.of<ConnectivityProvider>(context, listen: false).startMonitoring();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Internet Connectivity'),
+        backgroundColor: Colors.redAccent,
+      ),
+      body: pageUI(),
+    );
+  }
+
+  Widget pageUI() {
+    return Consumer<ConnectivityProvider>(
+      builder: (context, model, child) {
+        if (model.isOnline != null) {
+          return model.isOnline
+              ? Center(
+                  child: Text(
+                    'Home Page',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                )
+              : NoInternet();
+        }
+        return Container(
+          child: Center(
+            child: CircularProgressIndicator(),
+          ),
+        );
+      },
+    );
+  }
 }
 
 class _HomePageState extends State<HomePage> {
@@ -52,15 +98,15 @@ class _HomePageState extends State<HomePage> {
           )
         ],
       ),
-      body: Container(
-        child: new ListView.builder(
-          itemBuilder: (
-            _,
-            int index,
-          ) => ListDataItem(this._listOf[index]),
-          itemCount: this._listOf.length,
-        ),
-      ),
+      // body: Container(
+      //   child: new ListView.builder(
+      //     itemBuilder: (
+      //       _,
+      //       int index,
+      //     ) => ListDataItem(this._listOf[index]),
+      //     itemCount: this._listOf.length,
+      //   ),
+      // ),
     );
   }
 }

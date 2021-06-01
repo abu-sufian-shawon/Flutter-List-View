@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
+import 'api/data_model/Product.dart';
+
 // ignore: must_be_immutable
 class ListDataItem extends StatefulWidget {
-  String _itemName;
+  Product _itemName;
 
   ListDataItem(this._itemName);
 
@@ -24,7 +26,7 @@ class _ListDataItemState extends State<ListDataItem> {
           children: [
             Expanded(
               child: Text(
-                widget._itemName,
+                widget._itemName.name,
                 style: TextStyle(fontSize: 20),
               ),
             ),
