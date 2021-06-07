@@ -19,13 +19,14 @@ class _App extends State<App> {
   Widget build(BuildContext context) {
     return MultiProvider(
         providers: [
-          ChangeNotifierProvider(create: (context)=>ConnectivityProvider(),
-          child: HomePage(),)
-        ],
+        ChangeNotifierProvider(
+          create: (context) => ConnectivityProvider(),
+          child: HomePage(),
+        )
+      ],
       child: MaterialApp(
         home: HomePage(),
       ),
     );
-
   }
 }
